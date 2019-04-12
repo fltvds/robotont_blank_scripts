@@ -47,6 +47,22 @@ def move():
         ########################
         # YOUR CODE HERE START #
         ########################
+        if distances.centerMin > 0.5 and distances.rightMin > 0.3 and distances.leftMin > 0.3:
+            vel_msg.linear.x = 0.2
+            vel_msg.angular.z = 0
+            
+        elif distances.centerMin < 0.5 or distances.rightMin < 0.3 or distances.leftMin < 0.3:
+            vel_msg.linear.x = 0
+            if distances.leftMin > distances.rightMin:
+                vel_msg.angular.z = 0.2
+                vel_msg.linear.x = 0            
+            else:
+                vel_msg.angular.z = -0.2
+                vel_msg.linear.x = 0
+
+        vel_msg.linear.y = 0
+        velocity_publisher.publish(vel_msg)
+        time.sleep(0.1)
 
         ######################
         # YOUR CODE HERE END #
