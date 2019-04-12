@@ -19,14 +19,23 @@ MAX_Z_SPEED = 2
 # TASK 1
 
 
-def keep_distance(x, y, z, roll, pitch, yaw, twist):
 
+def keep_distance(x, y, z, roll, pitch, yaw, twist):
+    if x > 0.5:
+        twist.linear.x = 0.2
+    if x < 0.5:
+        twist.linear.x = -0.2
     return twist
 
 # TASK 2
 
 
 def keep_center(x, y, z, roll, pitch, yaw, twist):
+    if y > 0:
+        twist.linear.y = 0.2
+    if y < 0:
+        twist.linear.y = -0.2
+    return twist
 
     return twist
 
@@ -34,7 +43,10 @@ def keep_center(x, y, z, roll, pitch, yaw, twist):
 
 
 def turn_towards_ar(x, y, z, roll, pitch, yaw, twist):
-
+    if yaw < -1.6:
+        twist.angular.z = -0.2
+    if yaw > -1.5:
+        twist.angular.z = 0.2
     return twist
 
 
@@ -94,7 +106,12 @@ def ar_demo():
         yaw = euler[2]
         rospy.loginfo("RPY: %s %s %s", roll, pitch, yaw)
         # YOUR CODE HERE
-
+        if marker.id == 2:
+            twist_msg = keep_distance(x, y, z, roll, pitch, yaw, twist_msg)
+            twist_msg = turn_towards_ar(x, y, z, roll, pitch, yaw, twist_msg)
+        elif marker.id == 0: 
+            twist_msg = keep_center(x, y, z, roll, pitch, yaw, twist_msg)
+            twist_msg = turn_towards_ar(x, y, z, roll, pitch, yaw, twist_msg)
         # YOUR CODE HERE END
         # limiting
         twist_msg.linear.x = min(twist_msg.linear.x, MAX_X_SPEED) if twist_msg.linear.x > 0 else max(
