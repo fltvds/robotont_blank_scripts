@@ -20,30 +20,42 @@ MAX_Z_SPEED = 2
 
 
 def keep_distance(x, y, z, roll, pitch, yaw, twist):
-    if x > 0.5:
-        twist.linear.x = 0.2
-    if x < 0.5:
-        twist.linear.x = -0.2
+    e = x - 0.6
+    P = 0.7
+    v = P*e
+    twist.linear.x = v
+   # if x > 0.5:
+   #     twist.linear.x = 0.2
+   # if x < 0.5:
+   #     twist.linear.x = -0.2
     return twist
 
 # TASK 2
 
 
 def keep_center(x, y, z, roll, pitch, yaw, twist):
-    if y > 0:
-        twist.linear.y = 0.2
-    if y < 0:
-        twist.linear.y = -0.2
+    e = y - 0
+    P = 0.7
+    v = P*e
+    twist.linear.y = v
+    # if y > 0:
+   #     twist.linear.y = 0.2
+   # if y < 0:
+   #     twist.linear.y = -0.2
     return twist
 
 # TASK 3
 
 
 def turn_towards_ar(x, y, z, roll, pitch, yaw, twist):
-    if yaw < -1.6:
-        twist.angular.z = -0.2
-    if yaw > -1.5:
-        twist.angular.z = 0.2
+    e = yaw + 1.6
+    P = 0.4
+    v = P*e
+    twist.angular.z = v
+   # if yaw < -1.6:
+   #     twist.angular.z = -0.2
+   # if yaw > -1.5:
+   #     twist.angular.z = 0.2
     return twist
 
 

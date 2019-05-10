@@ -48,15 +48,13 @@ def move():
         ########################
         # YOUR CODE HERE START #
         ########################
-        e = distances.centerMin - 0.6
-        P =  0.7
-        v = P*e
-       # if distances.centerMin > 0.6:
-       #     vel_msg.linear.x = v*distances.centerMin
-       # elif distances.centerMin < 0.5:
-       #      vel_msg.linear.x = -v*distances.centerMin
-       # else:
-        vel_msg.linear.x = v
+        v = 0.2
+        if distances.centerMin > 0.6:
+            vel_msg.linear.x = v*distances.centerMi
+        elif distances.centerMin < 0.5:
+             vel_msg.linear.x = -v
+        else:
+             vel_msg.linear.x = 0
         vel_msg.linear.y = 0
         vel_msg.angular.z = 0
         velocity_publisher.publish(vel_msg)
